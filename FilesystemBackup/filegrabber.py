@@ -68,7 +68,7 @@ def copy_threaded(data_frame: pd.DataFrame, from_col: str, to_col: str):
 
     executor: concurrent.futures.Executor
     LOGGER.info(f"Copying {len(data_frame.index)} files.")
-    with concurrent.futures.ThreadPoolExecutor() as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
         # Process the list of files, but split the work across the process pool to use all CPUs!
         for _ in tqdm.tqdm(executor.map(copy_file, data_frame[from_col], data_frame[to_col]),
                            total=len(data_frame.index), unit=' files', desc='Copying'):
