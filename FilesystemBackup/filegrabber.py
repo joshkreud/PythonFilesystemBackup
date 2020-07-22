@@ -22,7 +22,7 @@ def get_files(path: Path) -> pd.DataFrame:
     all_files = []
     LOGGER.info(f"Getting all Paths below: {path}")
     for idx, i in enumerate(path.glob("**/*")):
-        if len(all_files) % 50 == 0:
+        if len(all_files) % 100 == 0:
             LOGGER.info(f"Collected so far: ({len(all_files)})")
         if i.is_file():
             #!Deal with Weird Charmaps
