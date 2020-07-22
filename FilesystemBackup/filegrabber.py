@@ -57,6 +57,7 @@ def copy_threaded(data_frame: pd.DataFrame, from_col: str, to_col: str):
             )
 
     LOGGER.info(f"Copying {len(data_frame.index)} files.")
+    data_frame.reset_index(inplace=True)
     for index, row in data_frame.iterrows():
         source = row[from_col]
         dest = row[to_col]
