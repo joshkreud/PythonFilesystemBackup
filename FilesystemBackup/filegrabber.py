@@ -96,12 +96,13 @@ def get_files_filtered(
     )
     return filtered_files
 
+def copy_data_from_df(filtered_files:pd.DataFrame,target_path:Path):
+    """Copies data by rows in dataframe.
 
-def copy_data(source_path: Path, target_path: Path, cutoff_date: datetime):
-    """Gets files, filters out gsdata and files older than cutoff, copies the files to target
+    Args:
+        filtered_files (pd.DataFrame): [dataframe provided by get_files]
+        target_path (Path): ["Copy to" path]
     """
-
-    filtered_files = get_files_filtered(source_path, target_path, cutoff_date)
     if filtered_files.shape[0] > 0:
         for _, row in filtered_files[
             filtered_files.File.map(str).str.len() > 255
@@ -119,4 +120,15 @@ def copy_data(source_path: Path, target_path: Path, cutoff_date: datetime):
             os.makedirs(target_path)
         copy_threaded(filtered_files, "File", "NewPath")
     else:
-        LOGGER.info(f"No files changed since: {cutoff_date}")
+        LOGGER.info(f"No files to copy")
+
+def copy_data(source_path: Path, target_path: Path, cutoff_date: datetime):
+    """Gets files, filters out gsdata and files older than cutoff, copies the files to target.
+
+    Args:
+        source_path (Path): [From where to get files]
+        target_path (Path): [where to copy them]
+        cutoff_date (datetime): [only take changed after Date]
+    """
+    filtered_files = get_files_filtered(source_path, target_path, cutoff_date)
+    copy_data_from_df(filtered_files,target_path)
