@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="filesystembackup",
-    version="0.1.3",
+    version="0.1.4",
     description="Can extract files from directory, filter them and generate a ZIP",
     url="https://github.com/joshkreud/PythonFilesystemBackup",
     author="Joshua Kreuder",
